@@ -22,33 +22,37 @@ function git_clone() {
     fi
 }
 
-git_clone https://git.openwrt.org/feed/packages.git openwrtpackages
+#git_clone https://git.openwrt.org/feed/packages.git openwrtpackages
 
 
 # 没有 xray-core
-rm -rf ./feeds/packages/net/xray-core
-mv -n openwrtpackages/net/xray-core ./feeds/packages/net/
+#rm -rf ./feeds/packages/net/xray-core
+#mv -n openwrtpackages/net/xray-core ./feeds/packages/net/
 
 # lede 的 transmission 没有web管理
-rm -rf ./feeds/packages/net/transmission
-mv -n openwrtpackages/net/transmission ./feeds/packages/net/
+#rm -rf ./feeds/packages/net/transmission
+#mv -n openwrtpackages/net/transmission ./feeds/packages/net/
 
-rm -rf openwrtpackages
+#rm -rf openwrtpackages
 
-sed -i 's/transmission-daemon-openssl/transmission-daemon/' feeds/luci/applications/luci-app-transmission/Makefile
-sed -i 's/transmission-daemon-openssl/transmission-daemon/' feeds/packages/net/transmission-web-control/Makefile
+#sed -i 's/transmission-daemon-openssl/transmission-daemon/' feeds/luci/applications/luci-app-transmission/Makefile
+#sed -i 's/transmission-web-control/transmission-web/' feeds/luci/applications/luci-app-transmission/Makefile
+#sed -i 's/transmission-daemon-openssl/transmission-daemon/' feeds/packages/net/transmission-web-control/Makefile
 
 
 # reinstall feeds
-./scripts/feeds install -a
+#./scripts/feeds install -a
 
 
-cd package/feeds/packages
-rm -rf xray-core
-ln -sf ../../../feeds/packages/net/xray-core xray-core
-cd -
+#cd package/feeds/packages
+#rm -rf xray-core
+#ln -sf ../../../feeds/packages/net/xray-core xray-core
+#cd -
 
 ### end openwrt packages
+
+# Modify linux version
+sed -i 's/KERNEL_PATCHVER:=5.15/KERNEL_PATCHVER:=6.1/' target/linux/rockchip/Makefile
 
 # Modify default IP
 sed -i 's/192.168.1.1/192.168.2.1/g' package/base-files/files/bin/config_generate
