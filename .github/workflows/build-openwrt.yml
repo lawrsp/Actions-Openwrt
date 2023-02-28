@@ -56,8 +56,8 @@ jobs:
     - name: Clone source code
       working-directory: /workdir
       run: |
-        cd /workdir
         df -hT $PWD
+        chmod +x $GITHUB_WORKSPACE/$CLONE_CODE_SH
         $GITHUB_WORKSPACE/$CLONE_CODE_SH /workdir/openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
